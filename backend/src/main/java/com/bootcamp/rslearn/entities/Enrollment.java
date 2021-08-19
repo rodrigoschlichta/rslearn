@@ -1,6 +1,5 @@
 package com.bootcamp.rslearn.entities;
 
-//Teste
 
 import java.time.Instant;
 
