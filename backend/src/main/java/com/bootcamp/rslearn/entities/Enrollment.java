@@ -2,10 +2,13 @@ package com.bootcamp.rslearn.entities;
 
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.bootcamp.rslearn.entities.PK.EnrollmentPK;
@@ -24,6 +27,9 @@ public class Enrollment {
 	private Instant refundMoment;
 	private boolean avaliable;
 	private boolean onlyUpdate;
+	
+	@ManyToMany(mappedBy = "enrollmentsDone")
+	private Set<Lesson> lessonsDone = new HashSet<>();
 	
 	public Enrollment() {		
 	}
