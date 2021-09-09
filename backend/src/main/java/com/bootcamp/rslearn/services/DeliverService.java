@@ -1,11 +1,15 @@
 package com.bootcamp.rslearn.services;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bootcamp.rslearn.dto.DeliverRevisionDTO;
 import com.bootcamp.rslearn.entities.Deliver;
+import com.bootcamp.rslearn.observers.DeliverRevisionObserver;
 import com.bootcamp.rslearn.repositories.DeliverRepository;
 
 @Service
@@ -13,6 +17,8 @@ public class DeliverService {
 	
 	@Autowired
 	private DeliverRepository repository;
+	
+	private Set<DeliverRevisionObserver> deliverRevisionObservers = new LinkedHashSet<>();
 	
 	@Transactional
 	public void saveRevision(Long id, DeliverRevisionDTO dto) {
@@ -22,7 +28,14 @@ public class DeliverService {
 		deliver.setCorrectCount(dto.getCorrectCount());
 		repository.save(deliver);
 		
+		for(DeliverRevisionObserver observer : deliverRevisionObservers){
+			observer.onSaveRevision(deliver);
+		}
 		
+	}
+	
+	public void subscribeDeliverRevisionObserver(DeliverRevisionObserver observer) {
+		deliverRevisionObservers.add(observer);
 	}
 
 }
