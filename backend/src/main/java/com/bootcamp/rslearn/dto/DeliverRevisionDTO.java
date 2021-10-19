@@ -4,7 +4,6 @@ package com.bootcamp.rslearn.dto;
 
 import java.io.Serializable;
 
-import com.bootcamp.rslearn.entities.Deliver;
 import com.bootcamp.rslearn.entities.enums.DeliverStatus;
 
 public class DeliverRevisionDTO implements Serializable {
